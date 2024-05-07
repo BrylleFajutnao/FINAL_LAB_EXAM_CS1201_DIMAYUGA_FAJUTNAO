@@ -1,17 +1,52 @@
 import os
 import random
+from utils.usermanager import UserManager
 from datetime import datetime
 
 class DiceGame:
     def load_scores():
         pass
 
+
     def save_scores():
         pass
 
     def play_game(self):
+
+        score = 0
+        wins = 0
+        roundscore = 0
+        round = 3
+
+        userdice = random.randint(1,6)
+        compdice = random.randint(1,6)
         
-        pass
+        while True:
+            
+            round -=1
+            
+            print("Starting game as (username)")
+            print("best of 3")
+
+            print(f"User rolled {userdice}")
+            print(f"Computer rolled {compdice}")
+
+            if userdice > compdice:
+                print ("User wins")
+                roundscore += 1
+            elif userdice < compdice:
+                print ("Computer wins")
+            elif userdice == compdice:
+                print ("Its A tie.")
+            
+            if round == 0:
+                if roundscore >= 2:
+                    print("user wins")
+              
+
+            
+
+            pass
 
     def show_topscores(self):
         highest_score = self.load_highest_score()

@@ -4,7 +4,6 @@ from utils.usermanager import UserManager
 from utils.score import Score
 
 def main():
-
     while True:
         while True:
             print("Random Dice Game")

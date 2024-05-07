@@ -1,4 +1,4 @@
-from dice_game import DiceGame
+from utils.dice_game import DiceGame
 
 class UserManager:
     def load_users(self, username, password):
@@ -20,7 +20,7 @@ class UserManager:
         pass
 
     def register():
-        username= input("Enter username: ")
+        username = input("Enter username: ")
         if len(username) <=3:
             print("username must be  4 charactes long")
             return
@@ -35,17 +35,17 @@ class UserManager:
         pass
 
     def login():
-        username= input("Enter username: ")
-        if 
+        username = input("Enter username: ")
+        if username not in username:
+            print("User not found.")
             return
-        else:
-            password= input("enter password: ")
-            if
+        password = input("enter password: ")
+        if password not in password:
+            print('Invalid password"')
+            return
                 
-                return
-            else:
-                print("logged in sucessful!")
-                DiceGame.menu()
+        print("logged in sucessful!")
+        DiceGame.menu()
 
 
         pass
