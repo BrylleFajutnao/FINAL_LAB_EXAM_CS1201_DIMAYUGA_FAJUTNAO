@@ -1,86 +1,69 @@
-import os
 import random
-from utils.usermanager import UserManager
-from datetime import datetime
+import os
+
+def clear_screen():
+    # Clear screen based on the operating system
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 class DiceGame:
-    def load_scores():
-        pass
+    def __init__(self):
+        self.rounds = 3
+        self.stage_wins = {'user': 0, 'computer': 0}
+        self.user_score = 0
+        self.computer_score = 0
 
+    def roll_dice(self):
+        return random.randint(1, 6)
 
-    def save_scores():
-        pass
+    def play_round(self):
+        user_roll = self.roll_dice()
+        comp_roll = self.roll_dice()
+        print(f"User rolled: {user_roll}")
+        print(f"Computer rolled: {comp_roll}")
+        if user_roll > comp_roll:
+            print("User wins this round!")
+            return 'user'
+        elif user_roll < comp_roll:
+            print("Computer wins this round!")
+            return 'computer'
+        else:
+            print("It's a tie!")
+            return None
+
+    def play_stage(self):
+        self.stage_wins = {'user': 0, 'computer': 0}  # Reset for each stage
+        for _ in range(self.rounds):
+            winner = self.play_round()
+            if winner:
+                self.stage_wins[winner] += 1
+            input("Press Enter to continue to the next round...")
+            clear_screen()
+        if self.stage_wins['user'] >= 2:
+            self.user_score += 3
+            print("Congratulations! You won this stage.")
+            return True
+        else:
+            self.computer_score += 3
+            print("Sorry, you lost this stage.")
+            return False
 
     def play_game(self):
-
-        score = 0
-        wins = 0
-        roundscore = 0
-        round = 3
-
-        userdice = random.randint(1,6)
-        compdice = random.randint(1,6)
-        
+        print("Let's play the dice game!")
+        stage = 1
         while True:
-            
-            round -=1
-            
-            print("Starting game as (username)")
-            print("best of 3")
-
-            print(f"User rolled {userdice}")
-            print(f"Computer rolled {compdice}")
-
-            if userdice > compdice:
-                print ("User wins")
-                roundscore += 1
-            elif userdice < compdice:
-                print ("Computer wins")
-            elif userdice == compdice:
-                print ("Its A tie.")
-            
-            if round == 0:
-                if roundscore >= 2:
-                    print("user wins")
-              
-
-            
-
-            pass
-
-    def show_topscores(self):
-        highest_score = self.load_highest_score()
-        highest_score_date = self.load_highest_score_date()
-        if highest_score is not None:
-            print(f"Highest Score: {highest_score} (Achieved on: {highest_score_date})")
-        else:
-            print("No highest score recorded yet.")
-        pass
-
-    def log_out(self):
-        print("Exiting the game.")
-        return
-        pass
-
-    def menu(self):
-        while True:
-            print("Random Dice Game")
-            print("Welcome {self.user}")
-            print("1. start")
-            print("2. top scores")
-            print("3. logout")
-
-            choice=int(input("Enter your choice: "))
-
-            try:
-                if choice == 1:
-                    self.play_game()
-                elif choice ==2:
-                    self.show_topscores()
-                elif choice == 3:
-                    self.log_out()
-                else:
-                    print("enter a number between 1-3")
-            except ValueError:
-                print("please enter a number")
-        pass
+            print(f"Stage {stage}:")
+            if not self.play_stage():
+                print("Game over.")
+                break
+            else:
+                print(f"Current Score - User: {self.user_score}, Computer: {self.computer_score}")
+                choice = input("Do you want to continue to the next stage? (yes/no): ").lower()
+                if choice != 'yes':
+                    print("Game ended.")
+                    break
+                stage += 1
+                clear_screen()
+        print(f"Final Score : {self.user_score}")
